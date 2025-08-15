@@ -94,7 +94,7 @@
         <div class="bodyloader">
         </div>
     </div>
-    <form name="form1" method="post" action="result.html" onkeypress="javascript:return WebForm_FireDefaultButton(event, 'btnSearch')" id="form1">
+    <form name="form1" action="result.html" onkeypress="javascript:return WebForm_FireDefaultButton(event, 'btnSearch')" id="form1">
 <div>
 <input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
 <input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
@@ -501,13 +501,7 @@ function __doPostBack(eventTarget, eventArgument) {
                                                                     <!--<span id="lblpassword1">Label</span>-->
                                                                     <!--<div id="fetch1"><input type="text" id="txt_psw" /></div>-->
                                                                 </div>
-																<a href="result.html">
-																    <button>Go to Result Page
-																
-																							
-
-                                                                <input type="submit" name="btnSearch" value="Search" onclick="return Valsearch();" id="btnSearch" class="btn" MaxLength="18" style="margin-top: 20px;" />
-																	</button></a>
+																<button class="btn"><a href="result.html" class="btn">Search</a></button>
                                                                 <span id="lbl1"></span>
                                                             </td>
                                                         </tr>
@@ -657,4 +651,5 @@ WebForm_AutoFocus('btnSearch');//]]>
 
 <!-- Mirrored from www.gturesults.in/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 15 Aug 2025 09:32:07 GMT -->
 </html>
+
 

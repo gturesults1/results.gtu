@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gujarat Technological University Ahmedabad</title>
+  <style>
+    /* --- CSS RESET (minimal) --- */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+
+    /* --- COLOR & TYPOGRAPHY VARIABLES (tuned from screenshot) --- */
+    :root{
+      --gtu-blue: #0c3f8a;         /* Title text */
+      --gtu-blue-2: #0a3a7d;       /* Subtle headings */
+      --gtu-link: #0645ad;         /* Links */
+      --gtu-red: #d91f2a;          /* Thin red rule */
+      --panel-border: #c9c9c9;     /* Panels & table outer border */
+      --panel-bg: #f8f9fb;         /* Page bg */
+      --table-stripe: #f4f7fc;     /* Table zebra */
+      --thead-bg: #e9f1ff;         /* Soft blue header */
+      --thead-border: #b7c7e5;     /* Header border */
+      --muted: #666;               /* Muted text */
+      --text: #202124;             /* Body text */
+      --chip-bg: #eef3ff;          /* Tiny header chips */
+      --warn-bg: #fff2f2;          /* Warning box bg */
+      --warn-border: #f3b7b7;      /* Warning border */
+      --ok: #1a7f37;               /* Green ok */
+      --bad: #c62828;              /* Fail red */
+    }
+
+    body{
+      font-family: Arial, Helvetica, "Segoe UI", system-ui, sans-serif;
+      color: var(--text);
+      background: var(--panel-bg);
+      line-height: 1.35;
+    }
+
+    .page{
+      max-width: 1180px;
+      margin: 32px auto 72px;
+      background: white;
+      border: 1px solid var(--panel-border);
+      box-shadow: 0 1px 2px rgba(0,0,0,.04);
+    }
+
+    /* --- HEADER --- */
+    .site-header{
+      position: relative;
+      padding: 18px 20px 8px;
+    }
+    .site-header-inner{
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 14px;
+      align-items: center;
+    }
+    .logo{
+      width: 71px; height: 71px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #ffffff 0 28%, #b11e2b 29% 30%, #e6e6e6 31% 100%);
+      border: 2px solid #b11e2b;
+      display: grid; place-items: center;
+      font-size: 10px; color:#b11e2b; font-weight: 700;
+    }
+    .title{
+      color: var(--gtu-blue);
+      font-weight: 800;
+      font-size: 30px;
+      letter-spacing: .2px;
+      margin-left:20px;
+    }
+    .meta-links{
+      position: absolute; right: 18px; top: 8px;
+      font-size: 12px; color: var(--muted);
+    }
+    .meta-links a{ color: var(--gtu-link); text-decoration: none; }
+    .rule{ height: 6px; background: var(--gtu-red); margin-top: 10px; }
+
+    /* --- MAIN GRID --- */
+    .content{
+      padding: 14px 14px 18px;
+    }
+    .grid{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .card{
+      border: 1px solid var(--panel-border);
+      background: white;
+    }
+    .card h3{
+      margin: 0;
+      padding: 10px 12px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--gtu-blue-2);
+      background: linear-gradient(#fdfefe, #f3f7ff);
+      border-bottom: 1px solid var(--thead-border);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .card h3::before{
+      content: "🔎";
+      font-size: 16px; opacity: .8;
+    }
+
+    .card-body{ padding: 12px; }
+
+    /* --- FORM LEFT --- */
+    .form-grid{
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 8px 10px;
+      align-items: center;
+      font-size: 13px;
+    }
+    label{ color: var(--muted); }
+    input[type="text"], select{
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #b9c1d1;
+      border-radius: 2px;
+      font-size: 13px;
+      outline: none;
+    }
+    input:focus, select:focus{ box-shadow: 0 0 0 2px #dbe8ff; border-color: #7aa2ff; }
+    .row-span-2{ grid-column: 2/3; opacity: .7; font-size: 12px; }
+
+    .captcha-row{
+      display: grid;
+      grid-template-columns: 140px 1fr 88px;
+      gap: 8px;
+      align-items: center;
+      margin-top: 4px;
+    }
+
+    .btn{
+      padding: 9px 14px;
+      background: linear-gradient(#2d6bcb, #1f56aa);
+      color: #fff; border: 1px solid #1b4f9f;
+      border-radius: 2px; cursor: pointer; font-weight: 700;
+      font-size: 13px;
+    }
+
+    /* --- RESULT RIGHT --- */
+    .result-grid{
+      display: grid; grid-template-columns: 120px 1fr; gap: 8px 10px; font-size: 13px;
+    }
+    .result-grid .val{ font-weight: 700; color: #111; }
+
+    /* --- TABLE --- */
+    .table-wrap{ margin-top: 12px; border: 1px solid var(--panel-border); }
+    table{ width: 100%; border-collapse: collapse; font-size: 13px; }
+    thead th{
+      background: var(--thead-bg);
+      border-bottom: 1px solid var(--thead-border);
+      padding: 10px 8px; text-align: left; color: #2a3f66; font-weight: 700;
+    }
+    tbody td, tbody th{ border-top: 1px solid #e4e8ef; padding: 8px 8px; }
+    tbody tr:nth-child(even){ background: var(--table-stripe); }
+    tbody tr:hover{ background: #eef5ff; }
+    .numeric{ text-align: center; }
+
+    .summary{
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px; font-size: 13px;
+      border: 1px solid var(--panel-border); padding: 8px 10px; background: #fff;
+    }
+    .summary b{ color: #111; }
+
+    /* --- ALERT --- */
+    .alert{
+      margin: 16px 0 6px;
+      border: 1px solid var(--warn-border);
+      background: var(--warn-bg);
+      padding: 14px 16px;
+      font-size: 14px;
+    }
+    .alert b{ color: var(--bad); }
+    .note{ font-size: 12px; color: var(--muted); margin-top: 8px; }
+    .links a{ color: var(--gtu-link); text-decoration: none; }
+
+    /* --- FOOT META --- */
+    .foot{
+      font-size: 11.5px; color: var(--muted);
+      border-top: 1px dashed #d4d8e2; padding-top: 8px; margin-top: 8px;
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 980px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px){
+      .site-header-inner{ grid-template-columns: 56px 1fr; }
+      .logo{ width:56px; height:56px; font-size:9px; }
+      .title{ font-size: 22px; }
+      .form-grid, .result-grid{ grid-template-columns: 1fr; }
+      .captcha-row{ grid-template-columns: 1fr; }
+      thead th, tbody td{ font-size: 12.5px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="site-header">
+      <div class="meta-links">Archive | Current <span style="color:#a33">[Summer 2025]</span></div>
+      <div class="site-header-inner">
+        <div class="logo"><img src="NewLogo-2.jpg" alt=" "></div>
+        <div class="title">Gujarat Technological University Ahmedabad</div>
+      </div>
+      <div class="rule" aria-hidden="true"></div>
+    </header>
+
+    <div class="content">
+      <div class="grid">
+        <!-- LEFT: SEARCH -->
+        <section class="card">
+          <h3>SEARCH :</h3>
+          <div class="card-body">
+            <div class="form-grid">
+              <label>Session</label>
+              <div>Summer 2025</div>
+
+              <label>Exam</label>
+              <select>
+                <option>.....BE SEM 4 - Regular (MAY 2025)</option>
+              </select>
+
+              <label>Enroll No.</label>
+              <input type="text" value="240603109017" />
+
+              <label>OR</label>
+              <div class="row-span-2">(e.g. _123456)</div>
+
+              <label>Seat No.</label>
+              <input type="text" placeholder="Student Portal Password" />
+
+              <label>Password.</label>
+              <div class="captcha-row">
+                <input type="text" value="63643102" aria-label="captcha" />
+                <input type="text" placeholder="Enter Captcha" />
+                <button class="btn">Search</button>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <!-- RIGHT: SEARCH RESULT -->
+        <section class="card">
+          <h3>SEARCH RESULT.:</h3>
+          <div class="card-body">
+            <div class="result-grid">
+              <div>Name</div><div class="val">PAREKH DHRUMILKUMAR SHAILESHBHAI</div>
+              <div>Enrollment No.</div><div class="val">240603109017</div>
+              <div>Exam Seat No.</div><div class="val">240603109017</div>
+              <div>Declared On</div><div class="val">15 Aug 2025</div>
+              <div>Exam</div><div class="val">BE SEM 4 - Regular (MAY 2025)</div>
+              <div>Branch</div><div class="val">ELECTRICAL ENGINEERING</div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- TABLE -->
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:120px">SUBJECT<br/>CODE</th>
+              <th>SUBJECT NAME</th>
+              <th class="numeric">ESE<br/>ABSENT</th>
+              <th colspan="2" class="numeric">Theory Grade<br/>ESE&nbsp;&nbsp;&nbsp;&nbsp;PA/CA</th>
+              <th colspan="2" class="numeric">Practical Grade<br/>ESE&nbsp;&nbsp;&nbsp;&nbsp;PA/CA</th>
+              <th class="numeric">TOTAL</th>
+              <th class="numeric">Subject<br/>Grade</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>3140005</th>
+              <td>Design Engineering 1 B</td>
+              <td class="numeric">-</td>
+              <td class="numeric">-</td>
+              <td class="numeric">-</td>
+              <td class="numeric">AA</td>
+              <td class="numeric">AB</td>
+              <td class="numeric">AA</td>
+              <td class="numeric">AA</td>
+            </tr>
+            <tr>
+              <th>3140911</th>
+              <td>Economics for Engineers</td>
+              <td class="numeric">-</td>
+              <td class="numeric">DD</td>
+              <td class="numeric">CD</td>
+              <td class="numeric">AB</td>
+              <td class="numeric">DD</td>
+              <td class="numeric">BB</td>
+              <td class="numeric">BB</td>
+            </tr>
+            <tr>
+              <th>3140912</th>
+              <td>Electromagnetic Fields</td>
+              <td class="numeric">-</td>
+              <td class="numeric">CD</td>
+              <td class="numeric">CD</td>
+              <td class="numeric">AB</td>
+              <td class="numeric">DD</td>
+              <td class="numeric">BB</td>
+              <td class="numeric">CC</td>
+            </tr>
+            <tr>
+              <th>3140913</th>
+              <td>Electrical Machine- I</td>
+              <td class="numeric">-</td>
+              <td class="numeric">CD</td>
+              <td class="numeric">BB</td>
+              <td class="numeric">BB</td>
+              <td class="numeric">AB</td>
+              <td class="numeric">CD</td>
+              <td class="numeric">CD</td>
+            </tr>
+            <tr>
+              <th>3140914</th>
+              <td>Power System- I</td>
+              <td class="numeric">-</td>
+              <td class="numeric">CD</td>
+              <td class="numeric">CD</td>
+              <td class="numeric">BB</td>
+              <td class="numeric">BC</td>
+              <td class="numeric">AB</td>
+              <td class="numeric">CC</td>
+            </tr>
+            <tr>
+              <th>3140915</th>
+              <td>Power Electronics</td>
+              <td class="numeric">-</td>
+              <td class="numeric">CD</td>
+              <td class="numeric">AB</td>
+              <td class="numeric">BB</td>
+              <td class="numeric">CD</td>
+              <td class="numeric">AB</td>
+              <td class="numeric">BB</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="summary">
+        <div><b>Current Sem. Backlog:</b>0</div>
+        <div style="text-align:right"><b>Total Backlog:</b> 3 &nbsp;&nbsp; <b>SPI:</b> 5.25 &nbsp;&nbsp; <b>CPI:</b> 5.30</div>
+      </div>
+
+      <div class="alert">
+        <div><b>CONGRATULATIONS! You have cleared this exam.</b></div>
+        <div class="note" style="margin-top:8px;">
+          This is a Computer generated provisional result, please consider the Hard-copy Gradesheet as final result.<br/>
+          Result queries will be entertained till 15-days from the Result declaration date. No result queries will be entertained afterword.
+        </div>
+        <div class="links" style="margin-top:10px;">
+          GTU's Official Instagram Page: <a href="#">https://www.instagram.com/gtumedai?r=nametag</a><br/>
+          GTU's Official YouTube Channel: <a href="#">https://www.youtube.com/c/GujaratTechnologicalUniversity</a>
+        </div>
+        <div class="foot">
+          Security code: 8ee74841-D2e2-4718-8970-30bb61e5e22d | URL: http://www.gturesult.in/default.aspx | Date: Friday, August 15, 2025 - 3:17 PM | IP: 103.240.207.237
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
